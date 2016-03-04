@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<script>
+  // helper function: log message to screen
+  var msg; 
+  function log(msg) 
+  {
+    (msg.substr(15,1)=='a'?document.getElementById('LED').src="leds/red-led-on-md.png":document.getElementById('LED').src ="leds/led-red-off-md.png");
+    document.getElementById('log').innerHTML += msg + "<br>\n";
+  };
+
+  
+
+  // setup websocket with callbacks
+  var ws = new WebSocket('ws://192.168.1.31:8080/');
+  ws.onopen = function() {
+    log('CONNECT');
+  };
+  ws.onclose = function() {
+    log('DISCONNECT');
+  };
+  ws.onmessage = function(event) {
+    msg = event.data;
+    log(msg);
+  };
+
+  function sendLED()
+  {
+	if(ws)
+	{	
+		try { ws.send("TOGGLE"); }
+		catch (ex){alert("Erreur : "+ex);} 
+	}
+  };
+  
+</script>
+
+
+<HTML>
+<HEAD>
+
+<style>
+body {
+	background-color : black;
+	color : white;
+	font-family : Arial, Helvetica, sans-serif;
+}
+div {
+	font-size : 75%;
+}
+</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   	<TITLE>Supervision GPIO</TITLE>
+	
+</HEAD>
+
+<BODY>
+<center><h1>Contrôler la LED sur GPIO21 </h1>
+	<a href="#" onclick="sendLED()";><img id="LED" src ="leds/led-red-off-md.png"></a>
+</center>
+
+<h2>&nbsp;&nbsp Historique :</h2>
+<div id='log'></div>
+
+</body>
+</html>
+
