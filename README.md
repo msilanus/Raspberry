@@ -9,11 +9,7 @@ L’application doit permettre de :
 
 # Câblage
 
-3.3V-----[ 10k ]------|
-                      |
-GPIO20----------------|----- SA1 ----|
-                                     |
-GPIO21-----[ 270 ]---- D1 -----------|
+![cablage](cablage.png)
 
 # Serveur websocket
 
